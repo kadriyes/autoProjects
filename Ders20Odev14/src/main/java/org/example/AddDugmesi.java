@@ -12,17 +12,19 @@ import java.util.List;
 
 public class AddDugmesi {
     public static void main(String[] args) {
+
         System.setProperty("webdriver.chrome.driver", "C:\\chromedriver\\chromedriver.exe");
         WebDriver driver = new ChromeDriver();
+        driver.manage().window().maximize();
         WebDriverWait wait = new WebDriverWait(driver, 20);
 
         try {
             driver.get("https://demoqa.com/webtables");
 
-            // Sayfanın tamamen yüklenmesini bekle
+            // sayfa yükleme
             wait.until(webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
 
-            // Engelleyici element varsa kapat
+            // engeleyicileri kapa
             List<WebElement> closeButtons = driver.findElements(By.cssSelector(".close-button"));
             if (!closeButtons.isEmpty()) {
                 for (WebElement closeButton : closeButtons) {
@@ -33,7 +35,7 @@ public class AddDugmesi {
                 }
             }
 
-            // "Add" düğmesine tıklama işlemi için alternatif yaklaşımlar
+            // "add tıklama
             WebElement addButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("addNewRecordButton")));
             try {
                 addButton.click();
@@ -42,7 +44,7 @@ public class AddDugmesi {
                 ((JavascriptExecutor) driver).executeScript("arguments[0].click();", addButton);
             }
 
-            // Yeni kayıt formunu doldurun
+            // form doldurma
             driver.findElement(By.cssSelector("#firstName")).sendKeys("Kadriye");
             driver.findElement(By.cssSelector("#lastName")).sendKeys("Yener");
             driver.findElement(By.cssSelector("#userEmail")).sendKeys("kadriye@deneme.com");
@@ -51,20 +53,20 @@ public class AddDugmesi {
             driver.findElement(By.cssSelector("#department")).sendKeys("TestAutomation");
             driver.findElement(By.cssSelector("#submit")).click();
 
-            // Formun başarılı bir şekilde gönderildiğini doğrulayın
+            // formu dogrulama
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#edit-record-4 > svg")));
 
-            // Düzenleme butonunu bul
+            // duzenle butonuna tıkla
             driver.findElement(By.cssSelector("#edit-record-4 > svg")).click();
          //   driver.findElement(By.cssSelector("#edit-record-4")).click();
-            // Düzenleme formunun açılmasını bekle
+            // Düzenleme formu aç ve güncelle
             WebElement lastNameField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[id='lastName']")));
             lastNameField.clear();
             lastNameField.sendKeys("Sir");
             driver.findElement(By.cssSelector("#submit")).click();
 
         } finally {
-            driver.quit(); // Tarayıcıyı kapat
+           // driver.quit(); // Tarayıcıyı kapat
         }
     }
 }

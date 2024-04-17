@@ -12,7 +12,6 @@ import java.util.concurrent.TimeUnit;
 
 public class DemoQATestXPath {
     public static void main(String[] args) {
-        // ChromeDriver'ın yolu ayarlanıyor
         System.setProperty("webdriver.chrome.driver", "C:\\chromedriver\\chromedriver.exe");
 
         WebDriver driver = new ChromeDriver();
@@ -20,7 +19,7 @@ public class DemoQATestXPath {
         WebDriverWait wait = new WebDriverWait(driver, 20); // Bekleme süresini 20 saniye olarak ayarladım
 
         try {
-            // 1. Test: Elements sayfası üzerindeki Buttons sekmesine tıklama ve Click Me butonuna basma
+            //Test1: buttona tıklama ve mesajı görüntüleme
             driver.get("https://demoqa.com/elements");
 
             WebElement buttonsTab = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='item-4']")));
@@ -30,12 +29,12 @@ public class DemoQATestXPath {
             WebElement messageElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='dynamicClickMessage']"))); // id değeri düzeltildi
             System.out.println("Görünen Mesaj: " + messageElement.getText());
 
-            // 2. Test: WebTables sayfasına gidin, "ADD" butonu ile yeni kayıt ekleyin ve düzenleyin
+            // Test 2: Add düğmesi ve form doldurma
             driver.get("https://demoqa.com/webtables");
             WebElement addButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='addNewRecordButton']")));
             addButton.click();
 
-            // Yeni kayıt formunu doldurma
+            // form doldurma
             driver.findElement(By.xpath("//input[@id='firstName']")).sendKeys("Kadriye");
             driver.findElement(By.xpath("//input[@id='lastName']")).sendKeys("Yener");
             driver.findElement(By.xpath("//input[@id='userEmail']")).sendKeys("kadriye@example.com");
@@ -44,7 +43,7 @@ public class DemoQATestXPath {
             driver.findElement(By.xpath("//input[@id='department']")).sendKeys("Quality Assurance");
             driver.findElement(By.xpath("//button[@id='submit']")).click();
             driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
-            // Eklenen kaydı düzenleme
+            // denemeler
             //WebElement editButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(text(), 'Kadriye')]/following-sibling::div//button[contains(@id, 'edit-record')]")));
             // editButton.click();
            // WebElement editButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='edit-record-4']")));
@@ -54,7 +53,6 @@ public class DemoQATestXPath {
             JavascriptExecutor executor = (JavascriptExecutor) driver;
             executor.executeScript("arguments[0].click();", editButton);
 
-            //WebElement editButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@id='edit-record-4']//*[name()='svg']")));
 
             WebElement editLastName = driver.findElement(By.xpath("//input[@id='lastName']"));
             editLastName.clear();
