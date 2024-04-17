@@ -1,0 +1,3 @@
+[submodule "autoProjects"]
+	path = autoProjects
+	url = https://github.com/kadriyes/autoProjects
